@@ -7,30 +7,19 @@ class TodoItems extends Component {
 
 
 
-        this.state = {
-            checkboxState: true
-        }
+
 
         this.createTasks = this.createTasks.bind(this);
     }
 
 
-    toggle(event) {
-        this.setState({
-            checkboxState: !this.state.checkboxState
-        });
-    }
 
 
 
-    createTasks(item) {
-        const checkedOrNot = [];
-        checkedOrNot.push(<p>{this.state.checkboxState ? 'Not done' : 'Done'}</p>);
-        const checkbox = (<span><input type="checkbox" onClick=
-            {this.toggle.bind(this)} />{checkedOrNot}</span>);  
+    createTasks(item, index) {
 
-        return <li>
-            <p> {checkbox}</p>
+        return <li key={item.key}>
+            <input type="checkbox" checked={item.checked} onClick={()=> this.props.toggle(index)}/>
             <p>{item.text}</p>
             <button onClick={() => this.delete(item.key)} key={item.key}>Remove</button>
             </li>

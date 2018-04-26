@@ -20,7 +20,8 @@ class TodoList extends Component {
         if (this._inputElement.value !== "") {
             let newItem = {
                 text: this._inputElement.value,
-                key: Date.now()
+                key: Date.now(),
+                checked: false
 
             };
         this.setState((prevState) => {
@@ -44,6 +45,30 @@ class TodoList extends Component {
         });
     }
 
+    clearall() {
+
+
+        let filteredItems = this.state.items.filter(function (item){
+            return (item.checked === false)
+        });
+
+        this.setState({
+            items: filteredItems
+        });
+
+
+    }
+
+
+
+    checkstatus(index) {
+
+        console.log(index);
+        const changestate = this.state.items.map((item, i) =>  index === i ? {...item, checked: !item.checked } : item);
+        this.setState({items: changestate})
+
+    }
+
     render () {
         return (
             <div className="todoListMain">
@@ -54,9 +79,12 @@ class TodoList extends Component {
                         </input>
                         <button type="submit"> Add</button>
                     </form>
+                    <button onClick={() => this.clearall()}>Remove All</button>
                 </div>
                 <TodoItems entries={this.state.items}
-                            delete={this.deleteItem}/>
+                            delete={this.deleteItem}
+                            toggle={(index) => this.checkstatus(index)}
+                />
             </div>
         );
     }
